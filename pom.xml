@@ -14,7 +14,7 @@
 	<name>jwt-tutorialma</name>
 	<description>Proyecto java ejemplo jwt</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
