@@ -24,6 +24,32 @@ public class UserService {
     }
 
     @Transactional
+    public User registrar(UserDto userDto) {
+    	User registrado = new User();
+    	try {
+        	if (userRepository.findOneWithAuthoritiesByUsername(userDto.getUsername()).orElse(null) != null) {
+                throw new DuplicateMemberException("이미 가입되어 있는 유저입니다.");
+            }
+
+            Authority authority = Authority.builder()
+                    .authorityName("ROLE_USER")
+                    .build();
+
+            User user = User.builder()
+                    .username(userDto.getUsername())
+                    .email(userDto.getEmail())
+                    .password(passwordEncoder.encode(userDto.getPassword()))
+                    .authorities(Collections.singleton(authority))
+                    .activated(true)
+                    .build();
+            registrado = userRepository.save(user);
+        }catch(Exception ex) {
+        	throw ex;
+        }
+        return registrado;
+    }
+    
+    @Transactional
     public UserDto signup(UserDto userDto) {
         if (userRepository.findOneWithAuthoritiesByUsername(userDto.getUsername()).orElse(null) != null) {
             throw new DuplicateMemberException("이미 가입되어 있는 유저입니다.");
@@ -35,8 +61,8 @@ public class UserService {
 
         User user = User.builder()
                 .username(userDto.getUsername())
+                .email(userDto.getEmail())
                 .password(passwordEncoder.encode(userDto.getPassword()))
-                .nickname(userDto.getNickname())
                 .authorities(Collections.singleton(authority))
                 .activated(true)
                 .build();

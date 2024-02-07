@@ -2,7 +2,7 @@ spring:
   application:
     name: tutorial-jwt  
   profiles:
-    active: dockerpostgres
+    active: postgres
 
 server:
   port: 8080

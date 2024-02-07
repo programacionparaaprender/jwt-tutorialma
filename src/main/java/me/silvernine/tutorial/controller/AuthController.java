@@ -22,7 +22,7 @@ import me.silvernine.tutorial.jwt.TokenProvider;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 public class AuthController {
 	
 	@Value("${jwt.token-validity-in-seconds}")
@@ -36,10 +36,9 @@ public class AuthController {
         this.authenticationManagerBuilder = authenticationManagerBuilder;
     }
 
-    @PostMapping("/authenticate")
-    public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
-
-        UsernamePasswordAuthenticationToken authenticationToken =
+    @PostMapping("/token")
+    public ResponseEntity<TokenDto> token(@Valid @RequestBody LoginDto loginDto) {
+    	UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
@@ -53,5 +52,10 @@ public class AuthController {
         tokenInHours = (tokenValidityInSeconds / 60) / 60;
         Integer tokenInDays = tokenInHours / 24; 
         return new ResponseEntity<>(new TokenDto(jwt, tokenInHours, tokenInDays), httpHeaders, HttpStatus.OK);
+    }
+    
+    @PostMapping("/authenticate")
+    public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
+        return tokenProvider.authorize(loginDto);
     }
 }

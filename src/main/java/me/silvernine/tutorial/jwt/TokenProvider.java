@@ -3,14 +3,22 @@ package me.silvernine.tutorial.jwt;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import me.silvernine.tutorial.dto.LoginDto;
+import me.silvernine.tutorial.dto.TokenDto;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
@@ -26,14 +34,36 @@ public class TokenProvider implements InitializingBean {
    private final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
    private static final String AUTHORITIES_KEY = "auth";
    private final String secret;
-   private final long tokenValidityInMilliseconds;
+   private final Integer tokenValidityInMilliseconds;
    private Key key;
+   
+  
+   private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
    public TokenProvider(
       @Value("${jwt.secret}") String secret,
-      @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds) {
-      this.secret = secret;
+      @Value("${jwt.token-validity-in-seconds}") Integer tokenValidityInSeconds, AuthenticationManagerBuilder authenticationManagerBuilder) {
+      this.authenticationManagerBuilder = authenticationManagerBuilder;
+	this.secret = secret;
       this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
+   }
+   
+   public ResponseEntity<TokenDto> authorize(LoginDto loginDto) {
+
+	   UsernamePasswordAuthenticationToken authenticationToken =
+               new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
+
+       Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+       SecurityContextHolder.getContext().setAuthentication(authentication);
+
+       String jwt = createToken(authentication);
+
+       HttpHeaders httpHeaders = new HttpHeaders();
+       httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+       Integer tokenInHours;        
+       tokenInHours = (tokenValidityInMilliseconds / 60) / 60;
+       Integer tokenInDays = tokenInHours / 24; 
+       return new ResponseEntity<>(new TokenDto(jwt, tokenInHours, tokenInDays), httpHeaders, HttpStatus.OK);
    }
 
    @Override

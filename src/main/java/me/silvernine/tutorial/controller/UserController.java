@@ -15,17 +15,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import me.silvernine.tutorial.dto.LoginDto;
+import me.silvernine.tutorial.dto.TokenDto;
 import me.silvernine.tutorial.dto.UserDto;
+import me.silvernine.tutorial.entity.User;
+import me.silvernine.tutorial.jwt.TokenProvider;
 import me.silvernine.tutorial.service.UserService;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class UserController {
     private final UserService userService;
-
-    public UserController(UserService userService) {
+    private final TokenProvider tokenProvider;
+    public UserController(UserService userService, TokenProvider tokenProvider) {
         this.userService = userService;
+        this.tokenProvider = tokenProvider;
     }
 
     @GetMapping("/hello")
@@ -44,6 +49,17 @@ public class UserController {
     ) {
         return ResponseEntity.ok(userService.signup(userDto));
     }
+    
+    @PostMapping("/registrar")
+    public ResponseEntity<TokenDto> registrar(
+            @Valid @RequestBody UserDto userDto
+    ) {
+    	User registrado = userService.registrar(userDto);
+        LoginDto loginDto = LoginDto.from(registrado);
+        loginDto.setPassword(userDto.getPassword());
+    	return tokenProvider.authorize(loginDto);
+    }
+    
 
     @GetMapping("/user")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")

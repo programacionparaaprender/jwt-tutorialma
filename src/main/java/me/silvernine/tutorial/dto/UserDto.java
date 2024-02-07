@@ -3,6 +3,9 @@ package me.silvernine.tutorial.dto;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.Column;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -32,8 +35,9 @@ public class UserDto {
    private String password;
 
    @NotNull
-   @Size(min = 3, max = 50)
-   private String nickname;
+   @Size(min = 10, max = 32)
+   @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+   private String email;
 
    private Set<AuthorityDto> authorityDtoSet;
 
@@ -42,7 +46,7 @@ public class UserDto {
 
       return UserDto.builder()
               .username(user.getUsername())
-              .nickname(user.getNickname())
+              .email(user.getEmail())
               .authorityDtoSet(user.getAuthorities().stream()
                       .map(authority -> AuthorityDto.builder().authorityName(authority.getAuthorityName()).build())
                       .collect(Collectors.toSet()))

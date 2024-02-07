@@ -1,0 +1,19 @@
+spring:
+    datasource:
+        driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+        password: 123
+        url: jdbc:sqlserver://localhost;databaseName=bd_jwt
+        username: sa
+    jpa:
+        hibernate:
+            ddl-auto: create
+            dialect: org.hibernate.dialect.SQLServer2012Dialect
+        show-sql: true
+        
+logging:
+    level:
+        org:
+            hibernate:
+                SQL: debug
+    pattern:
+        console: '%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n'

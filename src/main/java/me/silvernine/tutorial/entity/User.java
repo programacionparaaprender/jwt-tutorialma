@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,9 +41,12 @@ public class User {
    @Column(name = "password", length = 100)
    private String password;
 
-   @Column(name = "nickname", length = 50)
-   private String nickname;
-
+   @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+   @Column(name = "email", length = 50)
+   @NotEmpty(message = "Email cannot be empty")
+   @Size(min = 10, max = 32)
+   private String email;
+   
    @Column(name = "activated")
    private boolean activated;
 

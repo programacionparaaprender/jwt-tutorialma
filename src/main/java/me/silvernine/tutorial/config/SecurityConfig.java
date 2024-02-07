@@ -57,7 +57,9 @@ public class SecurityConfig {
             )
 
             .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                .antMatchers("/api/hello", "/api/authenticate", "/api/signup").permitAll()
+                .antMatchers("/api/user/hello", "/api/auth/token", "/api/auth/authenticate", "/api/user/signup").permitAll()
+                .antMatchers("/api/user/registrar").permitAll()
+                .antMatchers("/api/tarjeta", "/api/tarjeta/{id}").permitAll()
                 .requestMatchers(PathRequest.toH2Console()).permitAll()
                 .antMatchers("/v3/api-docs/", "/swagger-ui/**").permitAll()
                 .antMatchers("/v3/api-docs/**").permitAll()
