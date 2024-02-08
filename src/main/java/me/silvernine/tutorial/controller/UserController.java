@@ -1,6 +1,7 @@
 package me.silvernine.tutorial.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import me.silvernine.tutorial.dto.LoginDto;
 import me.silvernine.tutorial.dto.TokenDto;
 import me.silvernine.tutorial.dto.UserDto;
+import me.silvernine.tutorial.dto.response.UserDtoResponse;
 import me.silvernine.tutorial.entity.User;
 import me.silvernine.tutorial.jwt.TokenProvider;
 import me.silvernine.tutorial.service.UserService;
@@ -61,6 +63,12 @@ public class UserController {
     }
     
 
+    @GetMapping("/list")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    public ResponseEntity<List<UserDtoResponse>> listUsers() {
+        return ResponseEntity.ok(userService.listUsers());
+    }
+    
     @GetMapping("/user")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<UserDto> getMyUserInfo(HttpServletRequest request) {

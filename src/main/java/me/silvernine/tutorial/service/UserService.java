@@ -2,7 +2,9 @@ package me.silvernine.tutorial.service;
 
 import java.util.Collections;
 import java.util.Optional;
+import java.util.List;
 import me.silvernine.tutorial.dto.UserDto;
+import me.silvernine.tutorial.dto.response.UserDtoResponse;
 import me.silvernine.tutorial.entity.Authority;
 import me.silvernine.tutorial.entity.User;
 import me.silvernine.tutorial.exception.DuplicateMemberException;
@@ -75,6 +77,17 @@ public class UserService {
         return UserDto.from(userRepository.findOneWithAuthoritiesByUsername(username).orElse(null));
     }
 
+    
+    @Transactional(readOnly = true)
+    public List<UserDtoResponse> listUsers() {
+    	List<User> listUsers = userRepository.findAll();
+    	List<UserDtoResponse> listResponseUsers = new java.util.LinkedList<UserDtoResponse>();
+    	for(User user: listUsers) {
+    		listResponseUsers.add(UserDtoResponse.from(user));
+    	}
+        return listResponseUsers;
+    }
+    
     @Transactional(readOnly = true)
     public UserDto getMyUserWithAuthorities() {
         return UserDto.from(
