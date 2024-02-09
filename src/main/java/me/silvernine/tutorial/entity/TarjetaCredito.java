@@ -1,6 +1,7 @@
 package me.silvernine.tutorial.entity;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +21,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import me.silvernine.tutorial.dto.AuthorityDto;
+import me.silvernine.tutorial.dto.UserDto;
+import me.silvernine.tutorial.dto.request.TarjetaDtoRequest;
 
 
 @Entity
@@ -48,5 +52,15 @@ public class TarjetaCredito {
 
    @Column(name = "cvv", length = 3)
    private String cvv;
+   
+   public static TarjetaCredito from(TarjetaDtoRequest tarjetaDto) {
+	      if(tarjetaDto == null) return null;
+	      return TarjetaCredito.builder()
+	              .titular(tarjetaDto.getTitular())
+	              .numerotarjeta(tarjetaDto.getNumerotarjeta())
+	              .fechaExpiracion(tarjetaDto.getFechaExpiracion())
+	              .cvv(tarjetaDto.getCvv())
+	              .build();
+	   }
 
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import me.silvernine.tutorial.dto.UserDto;
+import me.silvernine.tutorial.dto.request.TarjetaDtoRequest;
 import me.silvernine.tutorial.entity.TarjetaCredito;
 import me.silvernine.tutorial.service.TarjetaService;
 import me.silvernine.tutorial.service.UserService;
@@ -30,6 +31,12 @@ public class TarjetaController {
         this.tarjetaService = _tarjetaService;
     }
 
+    @PostMapping("/")
+    public ResponseEntity<TarjetaCredito> save(@Valid @RequestBody TarjetaDtoRequest tarjetaDto) {
+        
+    	return ResponseEntity.ok(tarjetaService.save(tarjetaDto));
+    }
+    
     @GetMapping("/")
     public ResponseEntity<List<TarjetaCredito>> findAll() {
         return ResponseEntity.ok(tarjetaService.findAll());

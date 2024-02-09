@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import me.silvernine.tutorial.dto.request.TarjetaDtoRequest;
 import me.silvernine.tutorial.entity.Menu;
 import me.silvernine.tutorial.entity.TarjetaCredito;
 import me.silvernine.tutorial.repository.MenuRepository;
@@ -19,6 +20,19 @@ public class TarjetaService {
         this.tarjetaRepository = _tarjetaRepository;
     }
 
+    @Transactional
+    public TarjetaCredito save(TarjetaDtoRequest tarjetaDto) {
+    	TarjetaCredito tarjeta;
+        TarjetaCredito tarjetaResult;
+        try {
+        	tarjeta = TarjetaCredito.from(tarjetaDto);
+            tarjetaResult = tarjetaRepository.save(tarjeta);	
+        }catch(Exception ex) {
+        	throw ex;
+        }
+        return tarjetaResult;
+    }
+    
     @Transactional
     public List<TarjetaCredito> findAll() {
         List<TarjetaCredito> listTarjeta = tarjetaRepository.findAll();
