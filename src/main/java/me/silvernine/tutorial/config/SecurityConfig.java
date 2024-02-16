@@ -59,7 +59,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                 .antMatchers("/api/user/hello", "/api/auth/token", "/api/auth/authenticate", "/api/user/signup").permitAll()
                 .antMatchers("/api/user/registrar","/api/user/registrar/","/api/user/registrar/**").permitAll()
-                .antMatchers("/api/tarjeta","/api/tarjeta/**", "/api/tarjeta/{id}").permitAll()
+                .antMatchers("/api/tarjeta","/api/tarjeta/","/api/tarjeta/**", "/api/tarjeta/{id}").permitAll()
                 .requestMatchers(PathRequest.toH2Console()).permitAll()
                 .antMatchers("/v3/api-docs/", "/swagger-ui/**").permitAll()
                 .antMatchers("/v3/api-docs/**").permitAll()

@@ -18,28 +18,20 @@ import me.silvernine.tutorial.entity.TarjetaCredito;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class TarjetaDtoRequest {
 
-	@NotEmpty(message = "Titular cannot be empty")
-	@Size(min = 7, max = 50)
-	@NotNull
+
+	private int id;
+	
+	
 	private String titular;
 
-	@NotEmpty(message = "Número tarjeta cannot be empty")
-	@Size(min = 16, max = 50)
-	@NotNull   
-	private String numerotarjeta;
+ 
+	private String numeroTarjeta;
 
-	@NotEmpty(message = "Fecha de expiración cannot be empty")
-	@Size(min = 10, max = 50)
-	@NotNull
+
 	private String fechaExpiracion;
 
-	@NotEmpty(message = "CVV cannot be empty")
-	@Size(min = 3, max = 10)
-	@NotNull
 	private String cvv; 
 	
 }

@@ -57,7 +57,7 @@ public class TarjetaCredito {
 	      if(tarjetaDto == null) return null;
 	      return TarjetaCredito.builder()
 	              .titular(tarjetaDto.getTitular())
-	              .numerotarjeta(tarjetaDto.getNumerotarjeta())
+	              .numerotarjeta(tarjetaDto.getNumeroTarjeta())
 	              .fechaExpiracion(tarjetaDto.getFechaExpiracion())
 	              .cvv(tarjetaDto.getCvv())
 	              .build();

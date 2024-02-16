@@ -39,7 +39,8 @@ public class TarjetaController {
     
     @GetMapping("/")
     public ResponseEntity<List<TarjetaCredito>> findAll() {
-        return ResponseEntity.ok(tarjetaService.findAll());
+    	List<TarjetaCredito> listTarjetas = tarjetaService.findAll();
+        return ResponseEntity.ok(listTarjetas);
     }
     
     @GetMapping("/{id}")
