@@ -2,7 +2,7 @@ spring:
   application:
     name: tutorial-jwt  
   profiles:
-    active: postgres
+    active: amazonpostgres
 
 server:
   port: 8080
