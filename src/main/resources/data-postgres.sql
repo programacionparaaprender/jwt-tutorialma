@@ -15,6 +15,6 @@ insert into menu(id, nombre, url, hijo) values(1, 'inicio', '/', 0);
 insert into menu(id, nombre, url, hijo) values(2, 'usuarios', '/usuarios', 1);
 insert into menu(id, nombre, url, hijo) values(3, 'tarjeta', '/tarjeta', 1);
 
-insert into tarjetacredito(id, titular, numerotarjeta, fecha_expiracion, cvv) values(1, 'Pedro Gonzales', '02/26', '337');
-insert into tarjetacredito(id, titular, numerotarjeta, fecha_expiracion, cvv) values(2, 'Maria Marcano', '02/28', '338');
-insert into tarjetacredito(id, titular, numerotarjeta, fecha_expiracion, cvv) values(3, 'Talia Rodriguez', '02/26', '339');
+insert into tarjetacredito(id, titular, numerotarjeta, fecha_expiracion, cvv) values(1, 'Pedro Gonzales', '1234567812345678', '02/26', '337');
+insert into tarjetacredito(id, titular, numerotarjeta, fecha_expiracion, cvv) values(2, 'Maria Marcano', '9234567812345678', '02/28', '338');
+insert into tarjetacredito(id, titular, numerotarjeta, fecha_expiracion, cvv) values(3, 'Talia Rodriguez', '8234567812345678', '02/26', '339');

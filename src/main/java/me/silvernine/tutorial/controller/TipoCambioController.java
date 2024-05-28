@@ -35,7 +35,8 @@ public class TipoCambioController {
     @ResponseBody
     //@PostMapping("/cambio")
     @GetMapping(path = "/cambio/{monedaorigen}/{monedadestino}/{monto}") 
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    //bloqueo en amazon ec2 por eso se comenta
+    //@PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<TipoCambioResponse> getCambio(@PathVariable String monedaorigen, @PathVariable String monedadestino, @PathVariable String monto) {
     	TipoCambioRequest request = new TipoCambioRequest();
     	request.setMonedaorigen(monedaorigen);
@@ -51,7 +52,7 @@ public class TipoCambioController {
     @ResponseBody
     //@PostMapping("/cambio")
     @PostMapping(path = "/cambio", consumes = "application/json", produces = "application/json") 
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    //@PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<TipoCambioResponse> postCambio(@Valid @RequestBody TipoCambioRequest request) {
     	TipoCambioResponse tipoCambioResponse;
     	tipoCambioResponse = tipoCambioService.getCambio(request);

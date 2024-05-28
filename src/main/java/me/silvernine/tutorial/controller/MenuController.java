@@ -33,7 +33,8 @@ public class MenuController {
 
 
     @GetMapping("/")
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    //bloqueo en amazon ec2 por eso se comenta
+    //@PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<List<Menu>> getMenu() {
     	List<Menu> listMenu = menuService.findAll();
         return ResponseEntity.ok(listMenu);

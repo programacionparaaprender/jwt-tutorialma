@@ -1,13 +1,21 @@
 package me.silvernine.tutorial.config;
 
 import me.silvernine.tutorial.jwt.JwtSecurityConfig;
+import me.silvernine.tutorial.dto.UserDto;
+import me.silvernine.tutorial.dto.response.UserDtoResponse;
 import me.silvernine.tutorial.jwt.JwtAccessDeniedHandler;
 import me.silvernine.tutorial.jwt.JwtAuthenticationEntryPoint;
 import me.silvernine.tutorial.jwt.TokenProvider;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,6 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.filter.CorsFilter;
 
 @EnableWebSecurity
@@ -46,6 +55,15 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    	
+    	/*
+    	 * @GetMapping("/list")
+    @GetMapping("/user")
+
+    @GetMapping("/user/{username}")
+
+    	 * */
+    	
         http
             // tokenì�„ ì‚¬ìš©í•˜ëŠ” ë°©ì‹�ì�´ê¸° ë•Œë¬¸ì—� csrfë¥¼ disableí•©ë‹ˆë‹¤.
             .csrf(csrf -> csrf.disable())
@@ -57,6 +75,11 @@ public class SecurityConfig {
             )
 
             .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
+            		//para corregir bloqueo en amazon 
+            		.antMatchers("/api/user/list", "/api/auth/user", "/api/user/user/{username}").permitAll()
+            		.antMatchers("/tipocambio/cambio/{monedaorigen}/{monedadestino}/{monto}", "/tipocambio/cambio").permitAll()
+            		.antMatchers("/api/menu/").permitAll()
+            		
                 .antMatchers("/api/user/hello", "/api/auth/token", "/api/auth/authenticate", "/api/user/signup").permitAll()
                 .antMatchers("/api/user/registrar","/api/user/registrar/","/api/user/registrar/**").permitAll()
                 .antMatchers("/api/tarjeta","/api/tarjeta/","/api/tarjeta/**", "/api/tarjeta/{id}").permitAll()
