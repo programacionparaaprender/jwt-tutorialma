@@ -2,11 +2,11 @@ spring:
     datasource:
         driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
         password: 123
-        url: jdbc:sqlserver://localhost;databaseName=bd_jwt
+        url: jdbc:sqlserver://localhost;databaseName=bd_jwt;encrypt=false;
         username: sa
     jpa:
         hibernate:
-            ddl-auto: create
+            ddl-auto: update
             dialect: org.hibernate.dialect.SQLServer2012Dialect
         show-sql: true
         

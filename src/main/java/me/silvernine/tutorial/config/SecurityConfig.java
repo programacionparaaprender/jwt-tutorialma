@@ -76,7 +76,7 @@ public class SecurityConfig {
 
             .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
             		//para corregir bloqueo en amazon 
-            		.antMatchers("/api/user/list", "/api/auth/user", "/api/user/user/{username}").permitAll()
+            		.antMatchers("/api/user/list", "/api/auth/user", "/api/user/user/{username}", "/api/user/user/", "/api/user/user").permitAll()
             		.antMatchers("/tipocambio/cambio/{monedaorigen}/{monedadestino}/{monto}", "/tipocambio/cambio").permitAll()
             		.antMatchers("/api/menu/").permitAll()
             		
