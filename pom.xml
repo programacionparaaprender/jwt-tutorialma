@@ -14,7 +14,8 @@
 	<name>jwt-tutorialma</name>
 	<description>Proyecto java ejemplo jwt</description>
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>17</java.version>
+		<spring-cloud.version>Hoxton.SR12</spring-cloud.version>
 	</properties>
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
