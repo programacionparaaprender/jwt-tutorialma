@@ -4,4 +4,5 @@ import me.silvernine.tutorial.entity.Authority;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AuthorityRepository extends JpaRepository<Authority, String> {
+	boolean existsByAuthorityName(String authorityName); 
 }

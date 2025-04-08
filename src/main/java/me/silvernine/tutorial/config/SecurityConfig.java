@@ -9,7 +9,8 @@ import me.silvernine.tutorial.jwt.TokenProvider;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
+
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -74,20 +75,42 @@ public class SecurityConfig {
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
             )
 
-            .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-            		//para corregir bloqueo en amazon 
-            		.antMatchers("/api/user/list", "/api/auth/user", "/api/user/user/{username}", "/api/user/user/", "/api/user/user").permitAll()
-            		.antMatchers("/tipocambio/cambio/{monedaorigen}/{monedadestino}/{monto}", "/tipocambio/cambio").permitAll()
-            		.antMatchers("/api/menu/").permitAll()
-            		
-                .antMatchers("/api/user/hello", "/api/auth/token", "/api/auth/authenticate", "/api/user/signup").permitAll()
-                .antMatchers("/api/user/registrar","/api/user/registrar/","/api/user/registrar/**").permitAll()
-                .antMatchers("/api/tarjeta","/api/tarjeta/","/api/tarjeta/**", "/api/tarjeta/{id}").permitAll()
-                .requestMatchers(PathRequest.toH2Console()).permitAll()
-                .antMatchers("/v3/api-docs/", "/swagger-ui/**").permitAll()
-                .antMatchers("/v3/api-docs/**").permitAll()
-                .anyRequest().authenticated()
-            )
+				
+				  .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests //para corregir bloqueo en amazon 
+				  .requestMatchers("/api/user/list", "/api/auth/user",
+				  "/api/user/user/{username}", "/api/user/user/", "/api/user/user").permitAll()
+				  .requestMatchers("/tipocambio/cambio/{monedaorigen}/{monedadestino}/{monto}",
+				  "/tipocambio/cambio").permitAll() .requestMatchers("/api/menu/").permitAll()
+				  
+				  .requestMatchers("/api/user/hello", "/api/auth/token", "/api/auth/authenticate",
+				  "/api/user/signup").permitAll()
+				  .requestMatchers("/api/user/registrar","/api/user/registrar/",
+				  "/api/user/registrar/**").permitAll()
+				  .requestMatchers("/api/tarjeta","/api/tarjeta/","/api/tarjeta/**",
+				  "/api/tarjeta/{id}").permitAll()
+				  .requestMatchers(PathRequest.toH2Console()).permitAll()
+				  .requestMatchers("/v3/api-docs/", "/swagger-ui/**").permitAll()
+				  .requestMatchers("/v3/api-docs/**").permitAll() .anyRequest().authenticated() )
+				 
+            
+				/*
+				 * .authorizeHttpRequests(authorize -> authorize
+				 * .requestMatchers("/api/user/list", "/api/auth/user",
+				 * "/api/user/user/{username}", "/api/user/user/", "/api/user/user").permitAll()
+				 * .requestMatchers("/tipocambio/cambio/{monedaorigen}/{monedadestino}/{monto}",
+				 * "/tipocambio/cambio").permitAll() .requestMatchers("/api/menu/").permitAll()
+				 * .requestMatchers("/api/user/hello", "/api/auth/token",
+				 * "/api/auth/authenticate", "/api/user/signup").permitAll()
+				 * .requestMatchers("/api/user/registrar","/api/user/registrar/",
+				 * "/api/user/registrar/**").permitAll()
+				 * .requestMatchers("/api/tarjeta","/api/tarjeta/","/api/tarjeta/**",
+				 * "/api/tarjeta/{id}").permitAll()
+				 * .requestMatchers(PathRequest.toH2Console()).permitAll()
+				 * .requestMatchers("/v3/api-docs/", "/swagger-ui/**").permitAll()
+				 * .requestMatchers("/v3/api-docs/**").permitAll() .anyRequest().authenticated()
+				 * )
+				 */
+
 
             // ì„¸ì…˜ì�„ ì‚¬ìš©í•˜ì§€ ì•Šê¸° ë•Œë¬¸ì—� STATELESSë¡œ ì„¤ì •
             .sessionManagement(sessionManagement ->

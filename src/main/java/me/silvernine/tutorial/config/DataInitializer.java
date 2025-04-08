@@ -56,7 +56,7 @@ public class DataInitializer implements CommandLineRunner {
     	
     	User user2 = new User();
     	user2.setUsername("user"); 
-    	user2.setPassword("$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi");
+    	user2.setPassword("$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC");
     	user2.setActivated(true);
     	user2.setEmail("user@ejemplo.com");
     	user2.setAuthorities(Set.of(userRole));
@@ -116,11 +116,20 @@ public class DataInitializer implements CommandLineRunner {
     	tarjeta3.setFechaExpiracion("02/26");
     	tarjeta3.setCvv("339");
     	
-        authorityRepository.save(userRole);
-        authorityRepository.save(adminRole);
-        
-        userRepository.save(user1);
-        userRepository.save(user2);
+    	if(!authorityRepository.existsByAuthorityName(userRole.getAuthorityName())) {
+    		authorityRepository.save(userRole);
+    	}
+    	if(!authorityRepository.existsByAuthorityName(userRole.getAuthorityName())) {
+    		authorityRepository.save(adminRole);
+    	}
+    	
+    	if(!userRepository.existsByUsername(user1.getUsername())) {
+    		userRepository.save(user1);
+    	}
+    	if(!userRepository.existsByUsername(user2.getUsername())) {
+    		userRepository.save(user2);
+    	}
+
         
         tipoCambioRepository.save(tipo1);
         tipoCambioRepository.save(tipo2);
@@ -129,9 +138,16 @@ public class DataInitializer implements CommandLineRunner {
         menuRepository.save(menu2);
         menuRepository.save(menu3);
         
-        this.tarjetaRepository.save(tarjeta1);
-        this.tarjetaRepository.save(tarjeta2);
-        this.tarjetaRepository.save(tarjeta3);
+
+        if(!tarjetaRepository.existsByNumerotarjeta(tarjeta1.getNumerotarjeta())) {
+        	this.tarjetaRepository.save(tarjeta1);
+    	}
+        if(!tarjetaRepository.existsByNumerotarjeta(tarjeta2.getNumerotarjeta())) {
+        	this.tarjetaRepository.save(tarjeta2);
+    	}
+        if(!tarjetaRepository.existsByNumerotarjeta(tarjeta3.getNumerotarjeta())) {
+        	this.tarjetaRepository.save(tarjeta3);
+    	}
         
     }
 }
