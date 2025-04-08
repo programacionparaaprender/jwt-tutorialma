@@ -21,3 +21,13 @@
 >- https://www.ibm.com/docs/es/db2-for-zos/12?topic=ssl-configuring-java-runtime-environment-use
 >- https://stackoverflow.com/questions/41257366/import-windows-certificates-to-java
 >- https://stackoverflow.com/questions/32766114/sql-server-jdbc-error-on-java-8-the-driver-could-not-establish-a-secure-connect
+
+
+### urls del proyecto
+
+
+### swagger, el proyecto falla
+>- http://localhost:8080/swagger-ui.html
+
+### swagger, su nueva ruta es
+>- http://localhost:8080/swagger-ui/index.html
