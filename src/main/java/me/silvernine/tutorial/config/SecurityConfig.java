@@ -90,7 +90,9 @@ public class SecurityConfig {
 				  "/api/tarjeta/{id}").permitAll()
 				  .requestMatchers(PathRequest.toH2Console()).permitAll()
 				  .requestMatchers("/v3/api-docs/", "/swagger-ui/**").permitAll()
-				  .requestMatchers("/v3/api-docs/**").permitAll() .anyRequest().authenticated() )
+				  .requestMatchers("/v3/api-docs/**").permitAll() 
+				  .requestMatchers("/graphql").permitAll()
+				  .anyRequest().authenticated() )
 				 
             
 				/*

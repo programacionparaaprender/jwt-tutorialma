@@ -32,3 +32,6 @@
 ### swagger, su nueva ruta es
 >- http://localhost:8080/swagger-ui/index.html
 >- http://localhost:8080/swagger-ui/index.html#/tipo-cambio-controller/getCambio
+
+### proyecto de graphql
+>- http://localhost:8080/graphql/schema.json
